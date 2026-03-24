@@ -8,12 +8,10 @@ import com.carlos.produtosapi.produtos_api.mapper.ProdutoMapper;
 import com.carlos.produtosapi.produtos_api.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -41,34 +39,26 @@ public class ProdutoService {
     }
 
     public ProdutoResponseDTO listarProdutosPorId(Long id){
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.error("Produto com o Id: {} não encontrado", id);
-                    return new ProdutoNotFoundException("Produto com o Id: " + id + " não encontrado");
-                });
-
-        return produtoMapper.toDto(produto);
+        return produtoMapper.toDto(buscarProdutoPorId(id));
     }
 
-
     public void atualizarProduto(Long id, ProdutoRequestDTO produtoDTO){
-        Produto produtoExistente = produtoRepository.findById(id).orElseThrow(() -> {
-            log.error("Produto com o Id: {} não encontrado", id);
-            return new ProdutoNotFoundException("Produto com o Id: " + id + " não encontrado");
-        });
+        Produto produtoExistente = buscarProdutoPorId(id);
 
         produtoMapper.updateEntityFromDto(produtoDTO, produtoExistente);
         produtoRepository.save(produtoExistente);
     }
 
     public void deletarProduto(Long id){
-        Produto produtoExistente = produtoRepository.findById(id).orElseThrow(() -> {
-            log.error("Produto com o Id: {} não encontrado", id);
-            return new ProdutoNotFoundException("Produto com o Id: " + id + " não encontrado");
-        });
-        produtoRepository.delete(produtoExistente);
+        produtoRepository.delete( buscarProdutoPorId(id));
     }
 
 
+    private Produto buscarProdutoPorId(Long id) {
+        return produtoRepository.findById(id).orElseThrow(() -> {
+            log.error("Produto com o Id: {} não encontrado", id);
+            return new ProdutoNotFoundException("Produto com o Id: " + id + " não encontrado");
+        });
+    }
 
 }
