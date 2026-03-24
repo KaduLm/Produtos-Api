@@ -18,7 +18,7 @@ public class ProdutoController {
 
     private final ProdutoService produtoService;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Void> salvarProduto(@RequestBody ProdutoRequestDTO produtoDTO){
         produtoService.cadastrarProduto(produtoDTO);
         return ResponseEntity.ok().build();
@@ -32,5 +32,11 @@ public class ProdutoController {
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> listarProdutosPorId(@PathVariable Long id){
         return ResponseEntity.ok(produtoService.listarProdutosPorId(id));
+    }
+
+    @PutMapping("atualizar/{id}")
+    public ResponseEntity<Void> atualizarProduto(@RequestBody ProdutoRequestDTO produtoDTO, @PathVariable Long id){
+        produtoService.atualizarProduto(id, produtoDTO);
+        return ResponseEntity.ok().build();
     }
 }
