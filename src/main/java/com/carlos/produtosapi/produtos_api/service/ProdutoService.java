@@ -61,4 +61,14 @@ public class ProdutoService {
         produtoRepository.save(produtoExistente);
     }
 
+    public void deletarProduto(Long id){
+        Produto produtoExistente = produtoRepository.findById(id).orElseThrow(() -> {
+            log.error("Produto com o Id: {} não encontrado", id);
+            return new ProdutoNotFoundException("Produto com o Id: " + id + " não encontrado");
+        });
+        produtoRepository.delete(produtoExistente);
+    }
+
+
+
 }
