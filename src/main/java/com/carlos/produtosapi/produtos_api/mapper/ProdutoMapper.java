@@ -1,18 +1,20 @@
 package com.carlos.produtosapi.produtos_api.mapper;
 
-import com.carlos.produtosapi.produtos_api.dto.ProdutoDTO;
+import com.carlos.produtosapi.produtos_api.dto.ProdutoResponseDTO;
+import com.carlos.produtosapi.produtos_api.dto.ProdutoRequestDTO;
 import com.carlos.produtosapi.produtos_api.entity.Produto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ProdutoMapper {
 
-    Produto toEntity(ProdutoDTO dto);
+    Produto toEntity(ProdutoResponseDTO dto);
 
-    ProdutoDTO toDto(Produto entity);
+    Produto fromRequestoEntity(ProdutoRequestDTO dto);
 
-    List<ProdutoDTO> toDtoList(List<Produto> entityList);
+
+    ProdutoResponseDTO toDto(Produto entity);
+
 }
