@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class ProdutoService {
     public void cadastrarProduto(ProdutoRequestDTO produtoDTO){
         produtoRepository.save(produtoMapper.fromRequestoEntity(produtoDTO));
     }
+
 
     public Page<ProdutoResponseDTO> listarTodosOsProdutos(Pageable pageable){
         Page<Produto> paginaProdutos = produtoRepository.findAll(pageable);
@@ -46,6 +48,17 @@ public class ProdutoService {
                 });
 
         return produtoMapper.toDto(produto);
+    }
+
+
+    public void atualizarProduto(Long id, ProdutoRequestDTO produtoDTO){
+        Produto produtoExistente = produtoRepository.findById(id).orElseThrow(() -> {
+            log.error("Produto com o Id: {} não encontrado", id);
+            return new ProdutoNotFoundException("Produto com o Id: " + id + " não encontrado");
+        });
+
+        produtoMapper.updateEntityFromDto(produtoDTO, produtoExistente);
+        produtoRepository.save(produtoExistente);
     }
 
 }
