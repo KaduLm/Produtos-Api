@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -18,5 +20,9 @@ public class ProdutoService {
 
     public void cadastrarProduto(ProdutoDTO produtoDTO){
         produtoRepository.save(produtoMapper.toEntity(produtoDTO));
+    }
+
+    public List<ProdutoDTO> listarTodosOsProdutos(){
+        return produtoMapper.toDtoList(produtoRepository.findAll());
     }
 }
