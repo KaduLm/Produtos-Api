@@ -1,0 +1,288 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Produtos Api
+meta:
+  id: wrk_c6b85d04ea014ef3a0ead7d681186010
+  created: 1774376898388
+  modified: 1774376898388
+  description: ""
+collection:
+  - name: Produtos-Api
+    meta:
+      id: fld_e57ec7bca9a04279870f8f68a43c4483
+      created: 1774376923994
+      modified: 1774398768559
+      sortKey: -1774376923994
+      description: ""
+    children:
+      - name: Auth
+        meta:
+          id: fld_766f240e01354c629b20fe8d02d16167
+          created: 1774398758733
+          modified: 1774398758733
+          sortKey: -1774398758733
+          description: ""
+        children:
+          - url: http://localhost:8080/auth/login
+            name: Login
+            meta:
+              id: req_ff22aea68bb84e4b81dbc24956b1b384
+              created: 1774398711882
+              modified: 1774451524312
+              isPrivate: false
+              description: ""
+              sortKey: -1774398786384
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"username": "admin@exemplo.com",
+                	"password": "admin123"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/auth/register
+            name: Register
+            meta:
+              id: req_daefc37bc7404d4e8269cfa20c17c335
+              created: 1774398793299
+              modified: 1774451461225
+              isPrivate: false
+              description: ""
+              sortKey: -1774398779749.6875
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"username": "admin",
+                	"password": "admin123"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/auth/atualizar-role-usuario/2
+            name: Atualizar Role Usuario
+            meta:
+              id: req_b5d9a86e60cc4ab6873a45cd3049ac3a
+              created: 1774450346913
+              modified: 1774450403439
+              isPrivate: false
+              description: ""
+              sortKey: -1774398783066.8438
+            method: PATCH
+            headers:
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            authentication:
+              type: bearer
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQGV4ZW1wbG8uY29tIiwiZXhwIjoxNzc0NDU3NTc0fQ.bfx0iwlBJc2L_gY76YQCRRVbJAqUeXbHFmpdWFjdgpw
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Produtos
+        meta:
+          id: fld_8cd416e68b5641d2bb18d64b767e2cae
+          created: 1774398775170
+          modified: 1774398775170
+          sortKey: -1774398775170
+          description: ""
+        children:
+          - url: http://localhost:8080/produtos-api/cadastrar
+            name: Criar Produto
+            meta:
+              id: req_90f6fd685db74a89ae3e84ea9974934b
+              created: 1774376916505
+              modified: 1774451657329
+              isPrivate: false
+              description: ""
+              sortKey: -1774451645379
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Coca Cola",
+                	"preco": 3.80,
+                	"descricao": "Coca cola açucar",
+                	"categoria": "Suco"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            authentication:
+              type: bearer
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc0NDU4Njg3fQ.Lrd8Wqacvut2UMjik2PtbkUK0MtaQiTcNCc2ZavMlME
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/produtos-api
+            name: Listar todos os Produtos
+            meta:
+              id: req_43c1758e84e646c48622beae6da5b770
+              created: 1774377860274
+              modified: 1774451660063
+              isPrivate: false
+              description: ""
+              sortKey: -1774451645366.5
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            authentication:
+              type: bearer
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc0NDU4Njg3fQ.Lrd8Wqacvut2UMjik2PtbkUK0MtaQiTcNCc2ZavMlME
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/produtos-api/1
+            name: Listar Produtos por id
+            meta:
+              id: req_3ac196ee940f4b5daaeb7232b6faf9b9
+              created: 1774379584448
+              modified: 1774451645354
+              isPrivate: false
+              description: ""
+              sortKey: -1774451645329
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            authentication:
+              type: bearer
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzc0NDU4Njg3fQ.Lrd8Wqacvut2UMjik2PtbkUK0MtaQiTcNCc2ZavMlME
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/produtos-api/atualizar/1
+            name: Atualizar Produto
+            meta:
+              id: req_82a8c562d25448ebbf0d7b3126c12e0a
+              created: 1774380673575
+              modified: 1774451658848
+              isPrivate: false
+              description: ""
+              sortKey: -1774451645354
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Coca Cola Normal",
+                	"preco": 5.80,
+                	"descricao": "Coca cola com açucar",
+                	"categoria": "Bebidas"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            authentication:
+              type: bearer
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQGV4ZW1wbG8uY29tIiwiZXhwIjoxNzc0NDU4NzQyfQ.qMOejAtDoMkxaRmGEUjbuV93TJeKE2BYEGvC3KS6rYo
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/produtos-api/deletar/1
+            name: Deletar Produto
+            meta:
+              id: req_4773bef4d849490e92dabcb9dee16202
+              created: 1774381374176
+              modified: 1774451647409
+              isPrivate: false
+              description: ""
+              sortKey: -1774451645429
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.4.0
+                description: ""
+                disabled: false
+            authentication:
+              type: bearer
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQGV4ZW1wbG8uY29tIiwiZXhwIjoxNzc0NDU4NzQyfQ.qMOejAtDoMkxaRmGEUjbuV93TJeKE2BYEGvC3KS6rYo
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_85cd7855c32c408741356be3d1cd83a009b1a701
+    created: 1774376898396
+    modified: 1774376898396
+environments:
+  name: Base Environment
+  meta:
+    id: env_85cd7855c32c408741356be3d1cd83a009b1a701
+    created: 1774376898392
+    modified: 1774376898392
+    isPrivate: false
