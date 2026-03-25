@@ -1,4 +1,4 @@
-package com.carlos.produtosapi.produtos_api.dto;
+package com.carlos.produtosapi.produtos_api.dto.request;
 
 public record ProdutoRequestDTO(
         String nome,

@@ -1,7 +1,7 @@
 package com.carlos.produtosapi.produtos_api.controller;
 
-import com.carlos.produtosapi.produtos_api.dto.ProdutoResponseDTO;
-import com.carlos.produtosapi.produtos_api.dto.ProdutoRequestDTO;
+import com.carlos.produtosapi.produtos_api.dto.response.ProdutoResponseDTO;
+import com.carlos.produtosapi.produtos_api.dto.request.ProdutoRequestDTO;
 import com.carlos.produtosapi.produtos_api.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
