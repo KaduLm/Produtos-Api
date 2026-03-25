@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,7 +20,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,8 +93,9 @@ class ProdutoServiceTest {
 
             produtoService.cadastrarProduto(produtoRequestDTO);
 
-            inOrder(produtoMapper, produtoRepository).verify(produtoMapper).fromRequestoEntity(produtoRequestDTO);
-            inOrder(produtoMapper, produtoRepository).verify(produtoRepository).save(produto);
+            InOrder inOrder = inOrder(produtoMapper, produtoRepository);
+            inOrder.verify(produtoMapper).fromRequestoEntity(produtoRequestDTO);
+            inOrder.verify(produtoRepository).save(produto);
         }
     }
 
@@ -116,18 +117,19 @@ class ProdutoServiceTest {
             assertThat(resultado.getTotalElements()).isEqualTo(1);
             assertThat(resultado.getContent().get(0).nome()).isEqualTo("Notebook");
             verify(produtoRepository, times(1)).findAll(pageable);
+            verify(produtoMapper, times(1)).toDto(produto);
         }
 
         @Test
-        @DisplayName("Deve lançar ProdutoNotFoundException quando não houver produtos")
-        void deveLancarExcecaoQuandoNaoHouverProdutos() {
-            Page<Produto> paginaVazia = new PageImpl<>(Collections.emptyList());
+        @DisplayName("Deve retornar página vazia quando não houver produtos")
+        void deveRetornarPaginaVaziaQuandoNaoHouverProdutos() {
+            Page<Produto> paginaVazia = new PageImpl<>(List.of());
             when(produtoRepository.findAll(pageable)).thenReturn(paginaVazia);
 
-            assertThatThrownBy(() -> produtoService.listarTodosOsProdutos(pageable))
-                    .isInstanceOf(ProdutoNotFoundException.class)
-                    .hasMessage("Produtos não encontrados");
+            Page<ProdutoResponseDTO> resultado = produtoService.listarTodosOsProdutos(pageable);
 
+            assertThat(resultado).isEmpty();
+            assertThat(resultado.getTotalElements()).isZero();
             verify(produtoRepository, times(1)).findAll(pageable);
             verifyNoInteractions(produtoMapper);
         }
@@ -185,6 +187,18 @@ class ProdutoServiceTest {
         }
 
         @Test
+        @DisplayName("Deve chamar mapper antes de salvar ao atualizar")
+        void deveChamarMapperAntesDeSalvarAoAtualizar() {
+            when(produtoRepository.findById(1L)).thenReturn(Optional.of(produto));
+
+            produtoService.atualizarProduto(1L, produtoRequestDTO);
+
+            InOrder inOrder = inOrder(produtoMapper, produtoRepository);
+            inOrder.verify(produtoMapper).updateEntityFromDto(produtoRequestDTO, produto);
+            inOrder.verify(produtoRepository).save(produto);
+        }
+
+        @Test
         @DisplayName("Deve lançar ProdutoNotFoundException ao atualizar ID inexistente")
         void deveLancarExcecaoAoAtualizarIdInexistente() {
             when(produtoRepository.findById(99L)).thenReturn(Optional.empty());
@@ -194,7 +208,8 @@ class ProdutoServiceTest {
                     .hasMessage("Produto com o Id: 99 não encontrado");
 
             verify(produtoRepository, times(1)).findById(99L);
-            verifyNoMoreInteractions(produtoMapper, produtoRepository);
+            verifyNoInteractions(produtoMapper);
+            verify(produtoRepository, never()).save(any());
         }
     }
 
