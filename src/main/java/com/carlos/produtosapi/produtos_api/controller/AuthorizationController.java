@@ -5,6 +5,7 @@ import com.carlos.produtosapi.produtos_api.dto.response.LoginResponseDTO;
 import com.carlos.produtosapi.produtos_api.dto.request.RegisterRequestDTO;
 import com.carlos.produtosapi.produtos_api.entity.Users;
 import com.carlos.produtosapi.produtos_api.repository.UserRepository;
+import com.carlos.produtosapi.produtos_api.service.AuthorizationService;
 import com.carlos.produtosapi.produtos_api.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,10 +33,7 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 @Tag(name = "Autenticação", description = "Endpoints para registro e login de usuários")
 public class AuthorizationController {
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final TokenService tokenService;
-    private final PasswordEncoder passwordEncoder;
+    private final AuthorizationService authorizationService;
 
 
     @Operation(
@@ -59,12 +57,9 @@ public class AuthorizationController {
     })
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login (@RequestBody @Valid AuthenticationRequestDTO authenticationRequestDTO){
-        return ResponseEntity.ok(new LoginResponseDTO(tokenService.generateToken((Users) authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(
-                        authenticationRequestDTO.username(),
-                        authenticationRequestDTO.password()))
-                .getPrincipal())));
+        return ResponseEntity.ok(authorizationService.getLoginResponseDTO(authenticationRequestDTO));
     }
+
 
     @Operation(
             summary = "Registrar novo usuário",
@@ -84,13 +79,8 @@ public class AuthorizationController {
     })
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
-        if (userRepository.findByLogin(registerRequestDTO.username()).isPresent())
-            return ResponseEntity.badRequest().build();
-
-        Users entity = new Users(registerRequestDTO.username(), new BCryptPasswordEncoder().encode(registerRequestDTO.password()), registerRequestDTO.role());
-        userRepository.save(entity);
+        authorizationService.registrarUsuario(registerRequestDTO);
         return ResponseEntity.ok().build();
     }
-
 
 }

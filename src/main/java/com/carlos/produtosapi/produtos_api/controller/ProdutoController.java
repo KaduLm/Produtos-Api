@@ -58,7 +58,6 @@ public class ProdutoController {
             @ApiResponse(responseCode = "403", description = "Acesso negado requer role USER", content = @Content),
             @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido", content = @Content)
     })
-    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<Page<ProdutoResponseDTO>> listarTodosOsProdutos(Pageable pageable){
         return ResponseEntity.ok(produtoService.listarTodosOsProdutos(pageable));
@@ -78,7 +77,6 @@ public class ProdutoController {
             @ApiResponse(responseCode = "403", description = "Acesso negado requer role USER", content = @Content),
             @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido", content = @Content)
     })
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> listarProdutosPorId(@PathVariable Long id){
         return ResponseEntity.ok(produtoService.listarProdutosPorId(id));
