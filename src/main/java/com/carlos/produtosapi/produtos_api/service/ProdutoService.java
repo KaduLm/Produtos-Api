@@ -46,8 +46,9 @@ public class ProdutoService {
         log.info("Produto id: {} atualizado com sucesso", id);
     }
 
+    @Transactional
     public void deletarProduto(Long id){
-        produtoRepository.delete( buscarProdutoPorId(id));
+        produtoRepository.deleteById( buscarProdutoPorId(id).getId());
         log.info("Produto id: {} deletado com sucesso", id);
     }
 
