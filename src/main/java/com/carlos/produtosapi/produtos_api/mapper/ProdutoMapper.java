@@ -1,7 +1,7 @@
 package com.carlos.produtosapi.produtos_api.mapper;
 
-import com.carlos.produtosapi.produtos_api.dto.ProdutoResponseDTO;
-import com.carlos.produtosapi.produtos_api.dto.ProdutoRequestDTO;
+import com.carlos.produtosapi.produtos_api.dto.response.ProdutoResponseDTO;
+import com.carlos.produtosapi.produtos_api.dto.request.ProdutoRequestDTO;
 import com.carlos.produtosapi.produtos_api.entity.Produto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;

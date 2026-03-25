@@ -1,4 +1,4 @@
-package com.carlos.produtosapi.produtos_api.dto;
+package com.carlos.produtosapi.produtos_api.dto.response;
 
 import java.time.LocalDateTime;
 

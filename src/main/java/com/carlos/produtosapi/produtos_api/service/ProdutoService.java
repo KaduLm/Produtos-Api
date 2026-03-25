@@ -1,14 +1,13 @@
 package com.carlos.produtosapi.produtos_api.service;
 
-import com.carlos.produtosapi.produtos_api.dto.ProdutoResponseDTO;
-import com.carlos.produtosapi.produtos_api.dto.ProdutoRequestDTO;
+import com.carlos.produtosapi.produtos_api.dto.response.ProdutoResponseDTO;
+import com.carlos.produtosapi.produtos_api.dto.request.ProdutoRequestDTO;
 import com.carlos.produtosapi.produtos_api.entity.Produto;
 import com.carlos.produtosapi.produtos_api.exceptions.ProdutoNotFoundException;
 import com.carlos.produtosapi.produtos_api.mapper.ProdutoMapper;
 import com.carlos.produtosapi.produtos_api.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

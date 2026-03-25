@@ -1,6 +1,6 @@
 package com.carlos.produtosapi.produtos_api.exceptions;
 
-import com.carlos.produtosapi.produtos_api.dto.ErrorResponseDTO;
+import com.carlos.produtosapi.produtos_api.dto.response.ErrorResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
