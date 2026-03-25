@@ -3,10 +3,8 @@ package com.carlos.produtosapi.produtos_api.controller;
 import com.carlos.produtosapi.produtos_api.dto.request.AuthenticationRequestDTO;
 import com.carlos.produtosapi.produtos_api.dto.response.LoginResponseDTO;
 import com.carlos.produtosapi.produtos_api.dto.request.RegisterRequestDTO;
-import com.carlos.produtosapi.produtos_api.entity.Users;
-import com.carlos.produtosapi.produtos_api.repository.UserRepository;
 import com.carlos.produtosapi.produtos_api.service.AuthorizationService;
-import com.carlos.produtosapi.produtos_api.service.TokenService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,11 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
