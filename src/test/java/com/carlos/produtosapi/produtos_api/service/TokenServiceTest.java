@@ -49,9 +49,9 @@ class AuthorizationServiceTest {
 
     @BeforeEach
     void setUp() {
-        usuario = new Users("carlos", "senha123encodada", UserRole.ADMIN);
+        usuario = new Users("carlos", "senha123encodada");
 
-        registerRequestDTO = new RegisterRequestDTO("carlos", "senha123", UserRole.ADMIN);
+        registerRequestDTO = new RegisterRequestDTO("carlos", "senha123");
         authenticationRequestDTO = new AuthenticationRequestDTO("carlos", "senha123");
     }
 
@@ -130,7 +130,7 @@ class AuthorizationServiceTest {
 
             Users usuarioSalvo = captor.getValue();
             assertThat(usuarioSalvo.getUsername()).isEqualTo("carlos");
-            assertThat(usuarioSalvo.getRole()).isEqualTo(UserRole.ADMIN);
+            assertThat(usuarioSalvo.getRole()).isEqualTo(UserRole.USER);
         }
 
         @Test

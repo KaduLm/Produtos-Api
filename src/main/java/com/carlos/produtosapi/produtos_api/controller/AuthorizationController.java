@@ -14,10 +14,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -73,6 +71,22 @@ public class AuthorizationController {
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
         authorizationService.registrarUsuario(registerRequestDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/atualizar-role-usuario/{id}")
+    @Operation(
+            summary = "Atualizar role do usuário para ADMIN",
+            description = "Somente usuários com role ADMIN podem promover outros usuários."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Role atualizada com sucesso", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso negado", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content)
+    })
+    public ResponseEntity<Void> atualizarRoleUsuario(@PathVariable Long id) {
+        authorizationService.atualizarRoleUsuario(id);
         return ResponseEntity.ok().build();
     }
 
