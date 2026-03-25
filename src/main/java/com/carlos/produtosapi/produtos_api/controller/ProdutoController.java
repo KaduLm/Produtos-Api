@@ -55,7 +55,7 @@ public class ProdutoController {
                     description = "Lista de produtos retornada com sucesso",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class))
             ),
-            @ApiResponse(responseCode = "403", description = "Acesso negado — requer role USER", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso negado requer role USER", content = @Content),
             @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido", content = @Content)
     })
     @PreAuthorize("hasRole('USER')")
@@ -75,7 +75,7 @@ public class ProdutoController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProdutoResponseDTO.class))
             ),
             @ApiResponse(responseCode = "404", description = "Produto não encontrado", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Acesso negado — requer role USER", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso negado requer role USER", content = @Content),
             @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido", content = @Content)
     })
     @PreAuthorize("hasRole('USER')")
@@ -91,7 +91,7 @@ public class ProdutoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso", content = @Content),
             @ApiResponse(responseCode = "404", description = "Produto não encontrado", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Acesso negado — requer role ADMIN", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso negado requer role ADMIN", content = @Content),
             @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido", content = @Content)
     })
     @PreAuthorize("hasRole('ADMIN')")
@@ -108,7 +108,7 @@ public class ProdutoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto deletado com sucesso", content = @Content),
             @ApiResponse(responseCode = "404", description = "Produto não encontrado", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Acesso negado — requer role ADMIN", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acesso negado requer role ADMIN", content = @Content),
             @ApiResponse(responseCode = "401", description = "Token JWT ausente ou inválido", content = @Content)
     })
     @PreAuthorize("hasRole('ADMIN')")

@@ -40,7 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
-                        "/swagger-ui.html"
+                        "/swagger-ui.html",
+                        "/redoc.html",
+                        "/favicon.ico",
+                        "/error",
+                        "/webjars/**"
                 ).permitAll()
 
                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
