@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,28 +18,33 @@ public class ProdutoController {
 
     private final ProdutoService produtoService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/cadastrar")
     public ResponseEntity<Void> salvarProduto(@RequestBody ProdutoRequestDTO produtoDTO){
         produtoService.cadastrarProduto(produtoDTO);
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<Page<ProdutoResponseDTO>> listarTodosOsProdutos(Pageable pageable){
         return ResponseEntity.ok(produtoService.listarTodosOsProdutos(pageable));
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> listarProdutosPorId(@PathVariable Long id){
         return ResponseEntity.ok(produtoService.listarProdutosPorId(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("atualizar/{id}")
     public ResponseEntity<Void> atualizarProduto(@RequestBody ProdutoRequestDTO produtoDTO, @PathVariable Long id){
         produtoService.atualizarProduto(id, produtoDTO);
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("deletar/{id}")
     public ResponseEntity<Void> deletarProduto(@PathVariable Long id){
         produtoService.deletarProduto(id);
