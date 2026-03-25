@@ -1,19 +1,19 @@
 package com.carlos.produtosapi.produtos_api.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.List;
+
+@Getter
+@AllArgsConstructor
 public enum UserRole {
 
-    ADMIN("admin"),
-    USER("user");
+    ADMIN(List.of("admin", "user")),
+    USER(List.of("user"));
+
+    private List<String> authorities;
 
 
-    private String role;
-
-    UserRole(String role){
-        this.role = role;
-    }
-
-    public String getRole(){
-        return role;
-    }
 }
 

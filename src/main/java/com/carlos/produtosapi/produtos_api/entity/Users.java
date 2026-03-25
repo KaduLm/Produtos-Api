@@ -28,23 +28,25 @@ public class Users implements UserDetails {
     private UserRole role;
 
 
-    public Users(String login, String password, UserRole role) {
+    public Users(String login, String password) {
         this.login = login;
         this.password = password;
-        this.role = role;
+        this.role = UserRole.USER;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN)
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     @Override
     public String getUsername() {
         return login;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
