@@ -14,11 +14,37 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ProdutoNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleNotFound(ProdutoNotFoundException ex, HttpServletRequest request) {
-        var apiResponse = new ErrorResponseDTO(
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDTO(
                 HttpStatus.NOT_FOUND.value(),
                 "Not Found",
                 ex.getMessage(),
-                LocalDateTime.now());
-        return ResponseEntity.badRequest().body(apiResponse);
+                LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(TokenGenerationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleTokenGeneration(TokenGenerationException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseDTO(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Server Error",
+                ex.getMessage(),
+                LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(TokenValidationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleTokenValidation(TokenValidationException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO(
+                HttpStatus.UNAUTHORIZED.value(),
+                "Unauthorized",
+                ex.getMessage(),
+                LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDTO> handleGeneric(Exception ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseDTO(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Server Error",
+                "Ocorreu um erro inesperado",
+                LocalDateTime.now()));
     }
 }
