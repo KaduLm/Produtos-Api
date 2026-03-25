@@ -6,6 +6,12 @@ import com.carlos.produtosapi.produtos_api.dto.request.RegisterRequestDTO;
 import com.carlos.produtosapi.produtos_api.entity.Users;
 import com.carlos.produtosapi.produtos_api.repository.UserRepository;
 import com.carlos.produtosapi.produtos_api.service.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -19,9 +25,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@Tag(name = "Autenticação", description = "Endpoints para registro e login de usuários")
 public class AuthorizationController {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
@@ -29,8 +38,27 @@ public class AuthorizationController {
     private final PasswordEncoder passwordEncoder;
 
 
+    @Operation(
+            summary = "Autenticar usuário",
+            description = "Realiza o login do usuário com username e password, retornando um token JWT válido."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Login realizado com sucesso",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = LoginResponseDTO.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Credenciais inválidas",
+                    content = @Content
+            )
+    })
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login (@RequestBody AuthenticationRequestDTO authenticationRequestDTO){
+    public ResponseEntity<LoginResponseDTO> login (@RequestBody @Valid AuthenticationRequestDTO authenticationRequestDTO){
         return ResponseEntity.ok(new LoginResponseDTO(tokenService.generateToken((Users) authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         authenticationRequestDTO.username(),
@@ -38,8 +66,24 @@ public class AuthorizationController {
                 .getPrincipal())));
     }
 
+    @Operation(
+            summary = "Registrar novo usuário",
+            description = "Cria um novo usuário no sistema. Retorna 400 se o username já estiver em uso."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário registrado com sucesso",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Username já cadastrado",
+                    content = @Content
+            )
+    })
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
+    public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
         if (userRepository.findByLogin(registerRequestDTO.username()).isPresent())
             return ResponseEntity.badRequest().build();
 

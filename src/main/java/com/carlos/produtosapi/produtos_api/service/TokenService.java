@@ -49,7 +49,7 @@ public class TokenService {
                     .getSubject();
             log.debug("Token válido para o usuário: {}", subject);
             return subject;
-        } catch (TokenExpiredException _) {
+        } catch (TokenExpiredException e) {
             log.warn("Token expirado");
             throw new TokenValidationException("Token expirado");
         } catch (JWTVerificationException e) {
