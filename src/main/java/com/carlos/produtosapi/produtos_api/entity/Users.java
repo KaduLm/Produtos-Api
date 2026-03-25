@@ -1,13 +1,13 @@
 package com.carlos.produtosapi.produtos_api.entity;
 
 import com.carlos.produtosapi.produtos_api.enums.UserRole;
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,8 +17,8 @@ import java.util.List;
 public class Users implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String login;
 
